@@ -1,6 +1,7 @@
 //cus array
 let customer_array =[];
 let item_array =[];
+let order_array=[];
 
 const loadCustomerTable = () => {
     $("#customerTableBody").empty();
@@ -16,6 +17,14 @@ const loadItemTable = () => {
         console.log(item);
         let data =`<tr><td>${item.name}</td><td>${item.qty}</td><td>${item.description}</td><td>${item.price}</td></tr>`
         $("#itemTableBody").append(data);
+    })
+}
+const loadOrderTable = () => {
+    $("#orderTableBody").empty();
+    order_array.map((item,index) =>{
+        console.log(item);
+        let data =`<tr><td>${item.customer}</td><td>${item.item}</td><td>${item.quantity}</td><td>${item.price}</td><td>${item.total}</td></tr>`
+        $("#orderTableBody").append(data);
     })
 }
 
@@ -58,6 +67,29 @@ $("#item_add_button").on("click", function (){
     }
     item_array.push(item);
     loadItemTable();
+
+
+});
+// add order
+$("#order_add_btn").on("click", function (){
+    let customer = $('#customerSelect').val();
+    let item_name = $('#itemSelect').val();
+    let qty = $('#quantity').val();
+   /* let price = $('#').val();
+    let total = $('#price').val();
+*/
+
+    let order = {
+        id : order_array.length + 1,
+        customer : customer,
+        item : item_name,
+        quantity : qty,
+        price : price,
+        total : total
+
+    }
+    item_array.push(order);
+    loadOrderTable();
 
 
 });
