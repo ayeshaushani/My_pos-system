@@ -78,7 +78,6 @@ $("#customer_delete_button").on("click", function() {
 });
 //------------------------------------------------------- Edit Customer--------------------------------------------------
 // Update button functionality
-/*
 $("#customer_update_button").on("click", function() {
     if (selectedCustomerIndex !== undefined) {
         let first_name = $('#firstName').val();
@@ -104,7 +103,6 @@ $("#customer_update_button").on("click", function() {
         alert("Please select a customer to update.");
     }
 });
-*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                ITEM                                                                                        //
