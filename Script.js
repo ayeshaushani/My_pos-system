@@ -76,7 +76,7 @@ $("#customer_delete_button").on("click", function() {
         alert("Please select a customer to delete.");
     }
 });
-//------------------------------------------------------- Edit Customer--------------------------------------------------
+//------------------------------------------------------- Update Customer--------------------------------------------------
 // Update button functionality
 $("#customer_update_button").on("click", function() {
     if (selectedCustomerIndex !== undefined) {
@@ -109,6 +109,12 @@ $("#customer_update_button").on("click", function() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //+++++++++++++++++++++++++++++++++++++++++++ add item ++++++++++++++++++++++++++++++++++++++++//
+// Clear form function
+const clearForm1 = () => {
+    $('#itemForm')[0].reset(); // Reset the form fields
+    selectedItemIndex = undefined; // Reset the selected item index
+    $("#itemTableBody tr").removeClass("table-active"); // Clear any row highlights
+};
  const loadItemTable = () => {
      $("#itemTableBody").empty();
      item_array.map((item,index) =>{
@@ -138,7 +144,7 @@ $("#item_add_button").on("click", function (){CustomerId_array
     }
     item_array.push(item);
     loadItemTable();
-    clearForm();
+    clearForm1();
 
 
 });
