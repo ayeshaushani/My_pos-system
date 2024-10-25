@@ -148,6 +148,55 @@ $("#item_add_button").on("click", function (){CustomerId_array
 
 
 });
+// Click event to select an item row
+$("#itemTableBody").on("click", "tr", function() {
+    selectedItemIndex = $(this).index(); // Get the index of the clicked row
+    let item = item_array[selectedItemIndex]; // Get the item data
+    // Populate the form with the selected item's data
+    $('#itemName').val(item.name);
+    $('#qty').val(item.qty);
+    $('#itemDescription').val(item.description);
+    $('#price').val(item.price);
+
+    // Highlight the selected row
+    $("#itemTableBody tr").removeClass("table-active"); // Remove highlight from all rows
+    $(this).addClass("table-active"); // Highlight the selected row
+});
+
+// Delete button functionality
+$("#item_delete_button").on("click", function () {
+    if (selectedItemIndex !== undefined) {
+        item_array.splice(selectedItemIndex, 1); // Remove the selected item
+        loadItemTable(); // Refresh the table
+        clearForm(); // Clear the form
+    } else {
+        alert("Please select an item to delete.");
+    }
+});
+
+// Update button functionality
+$("#item_update_button").on("click", function () {
+    if (selectedItemIndex !== undefined) {
+        let item_name = $('#itemName').val();
+        let qty = $('#qty').val();
+        let description = $('#itemDescription').val();
+        let price = $('#price').val();
+
+        // Update the selected item
+        item_array[selectedItemIndex] = {
+            id: selectedItemIndex + 1, // Keep the same ID for simplicity
+            name: item_name,
+            qty: qty,
+            description: description,
+            price: price,
+        };
+
+        loadItemTable(); // Refresh the table
+        clearForm(); // Clear the form
+    } else {
+        alert("Please select an item to update.");
+    }
+});
 //////////////////////////////////////////////////////////////////////////// add order////////////////////////////////////////////////////
 
 /*
