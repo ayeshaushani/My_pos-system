@@ -4,10 +4,19 @@ let item_array =[];
 let order_array=[];
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                          CUSTOMER                                            //
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-////////////////////////////////////////////////////////////////////add customer///////////////////////////////////////////////////////////
- const loadCustomerTable = () => {
+//+++++++++++++++++++++++++++++++++++++++++++=add customer+++++++++++++++++++++++++++++++++++++++++++++++
+const clearForm = () => {
+    $('#firstName').val('');
+    $('#lastName').val('');
+    $('#mobile').val('');
+    $('#email').val('');
+    $('#address').val('');
+}
+const loadCustomerTable = () => {
      $("#customerTableBody").empty();
     customer_array.map((item,index) =>{
         console.log(item);
@@ -38,9 +47,70 @@ $("#customer_add_button").on("click", function (){
     }
     customer_array.push(customer);
     loadCustomerTable();
+    clearForm();
 
 });
-/////////////////////////////////////////////////////////////// add item///////////////////////////////////////////////////////
+//----------------------------------------------------------------------- Delete Customer----------------------------------------
+let selectedCustomerIndex;
+
+// Click event to select a customer row
+$("#customerTableBody").on("click", "tr", function() {
+    selectedCustomerIndex = $(this).index(); // Get the index of the clicked row
+    let customer = customer_array[selectedCustomerIndex]; // Get the customer data
+    // Populate the form with the selected customer's data
+    $('#firstName').val(customer.first_name);
+    $('#lastName').val(customer.last_name);
+    $('#mobile').val(customer.mobile);
+    $('#email').val(customer.email);
+    $('#address').val(customer.address);
+});
+
+// Delete button functionality
+$("#customer_delete_button").on("click", function() {
+    if (selectedCustomerIndex !== undefined) {
+        customer_array.splice(selectedCustomerIndex, 1); // Remove the selected customer
+        loadCustomerTable(); // Refresh the table
+        selectedCustomerIndex = undefined; // Reset selection
+        $('#customerForm')[0].reset(); // Clear the form
+    } else {
+        alert("Please select a customer to delete.");
+    }
+});
+//------------------------------------------------------- Edit Customer--------------------------------------------------
+// Update button functionality
+/*
+$("#customer_update_button").on("click", function() {
+    if (selectedCustomerIndex !== undefined) {
+        let first_name = $('#firstName').val();
+        let last_name = $('#lastName').val();
+        let mobile = $('#mobile').val();
+        let email = $('#email').val();
+        let address = $('#address').val();
+
+        // Update the selected customer
+        customer_array[selectedCustomerIndex] = {
+            id: selectedCustomerIndex + 1,
+            first_name,
+            last_name,
+            mobile,
+            email,
+            address
+        };
+
+        loadCustomerTable(); // Refresh the table
+        selectedCustomerIndex = undefined; // Reset selection
+        $('#customerForm')[0].reset(); // Clear the form
+    } else {
+        alert("Please select a customer to update.");
+    }
+});
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                ITEM                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//+++++++++++++++++++++++++++++++++++++++++++ add item ++++++++++++++++++++++++++++++++++++++++//
  const loadItemTable = () => {
      $("#itemTableBody").empty();
      item_array.map((item,index) =>{
@@ -53,7 +123,7 @@ $("#customer_add_button").on("click", function (){
         $("#itemTableBody").append(data);
     });
  }
-$("#item_add_button").on("click", function (){
+$("#item_add_button").on("click", function (){CustomerId_array
     let item_name = $('#itemName').val();
     let qty = $('#qty').val();
     let description = $('#itemDescription').val();
@@ -70,6 +140,7 @@ $("#item_add_button").on("click", function (){
     }
     item_array.push(item);
     loadItemTable();
+    clearForm();
 
 
 });
@@ -106,9 +177,8 @@ $("#order_add_btn").on("click", function (){
     loadOrderTable();
 
 
-});*/
+});*/  let CustomerId_array = [];
    const CustomerSelect = () => {
-    let CustomerId_array = [];
     CustomerId_array = customer_array;
 
     $("#customer").empty();
