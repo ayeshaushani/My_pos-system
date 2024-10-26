@@ -3,6 +3,14 @@ let customer_array =[];
 let item_array =[];
 let order_array=[];
 
+const validEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+};
+const validMobile = (mobile) => {
+    const sriLankanMobileRegex = /^(?:\+94|0)?7[0-9]{8}$/;
+    return sriLankanMobileRegex.test(mobile);
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //                                          CUSTOMER                                            //
@@ -19,7 +27,7 @@ const clearForm = () => {
 const loadCustomerTable = () => {
      $("#customerTableBody").empty();
     customer_array.map((item,index) =>{
-        console.log(item);
+       /* console.log(item);*/
          let data =`<tr>
              <td>${item.first_name}</td>
              <td>${item.last_name}</td>
@@ -29,6 +37,7 @@ const loadCustomerTable = () => {
          $("#customerTableBody").append(data);
     });
  }
+ //save customer
 $("#customer_add_button").on("click", function (){
     let first_name = $('#firstName').val();
     let last_name = $('#lastName').val();
@@ -36,6 +45,23 @@ $("#customer_add_button").on("click", function (){
     let email = $('#email').val();
     let address = $('#address').val();
 
+    if(first_name.length===0){
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }else if(last_name.length===0){
+        alert("invalid last name");
+    }else if(!validEmail(email)){
+        alert("invalid email");
+    }else if(!validMobile(mobile)){
+        alert("invalid mobile");
+    }else if(address.length===0){
+        alert("invalid address");
+    }else{
     let customer = {
         id : customer_array.length + 1,
         first_name : first_name,
@@ -43,11 +69,13 @@ $("#customer_add_button").on("click", function (){
         mobile : mobile,
         email : email,
         address : address
-
+        }
+        customer_array.push(customer);
+        loadCustomerTable();
+        clearForm();
     }
-    customer_array.push(customer);
-    loadCustomerTable();
-    clearForm();
+
+
 
 });
 //----------------------------------------------------------------------- Delete Customer----------------------------------------
@@ -63,6 +91,9 @@ $("#customerTableBody").on("click", "tr", function() {
     $('#mobile').val(customer.mobile);
     $('#email').val(customer.email);
     $('#address').val(customer.address);
+
+    console.log(customer);
+
 });
 
 // Delete button functionality
