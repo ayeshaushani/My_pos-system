@@ -1,6 +1,9 @@
+import CustomerModels from "../models/customerModels.js";
+import {customer_array } from "../db/database.js";
+import {item_array} from "../db/database.js";
 //cus array
-let customer_array =[];
-let item_array =[];
+/*let customer_array =[];*/
+/*let item_array =[];*/
 let order_array=[];
 
 const validEmail = (email) => {
@@ -46,13 +49,7 @@ $("#customer_add_button").on("click", function (){
     let address = $('#address').val();
 
     if(first_name.length===0){
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500
-        });
+      alert("invalid customer");
     }else if(last_name.length===0){
         alert("invalid last name");
     }else if(!validEmail(email)){
@@ -62,14 +59,23 @@ $("#customer_add_button").on("click", function (){
     }else if(address.length===0){
         alert("invalid address");
     }else{
-    let customer = {
-        id : customer_array.length + 1,
-        first_name : first_name,
-        last_name : last_name,
-        mobile : mobile,
-        email : email,
-        address : address
-        }
+    let customer = new CustomerModels(
+        customer_array.length + 1,
+        first_name,
+         last_name,
+        mobile,
+        email,
+        address
+    );
+    new CustomerModels();
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "customer has been saved",
+            showConfirmButton: false,
+            timer: 1500
+        });
+
         customer_array.push(customer);
         loadCustomerTable();
         clearForm();
@@ -103,6 +109,23 @@ $("#customer_delete_button").on("click", function() {
         loadCustomerTable(); // Refresh the table
         selectedCustomerIndex = undefined; // Reset selection
         $('#customerForm')[0].reset(); // Clear the form
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
     } else {
         alert("Please select a customer to delete.");
     }
@@ -126,10 +149,32 @@ $("#customer_update_button").on("click", function() {
             email,
             address
         };
-
         loadCustomerTable(); // Refresh the table
         selectedCustomerIndex = undefined; // Reset selection
         $('#customerForm')[0].reset(); // Clear the form
+
+        let timerInterval;
+        Swal.fire({
+            title: "customer updating...",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("customer updated...!");
+            }
+        });
     } else {
         alert("Please select a customer to update.");
     }
@@ -141,9 +186,9 @@ $("#customer_update_button").on("click", function() {
 
 //+++++++++++++++++++++++++++++++++++++++++++ add item ++++++++++++++++++++++++++++++++++++++++//
 // Clear form function
-const clearForm1 = () => {
+/*const clearForm1 = () => {
     $('#itemForm')[0].reset(); // Reset the form fields
-    selectedItemIndex = undefined; // Reset the selected item index
+    let selectedItemIndex = undefined; // Reset the selected item index
     $("#itemTableBody tr").removeClass("table-active"); // Clear any row highlights
 };
  const loadItemTable = () => {
@@ -173,6 +218,7 @@ $("#item_add_button").on("click", function (){CustomerId_array
         price : price,
 
     }
+
     item_array.push(item);
     loadItemTable();
     clearForm1();
@@ -181,7 +227,7 @@ $("#item_add_button").on("click", function (){CustomerId_array
 });
 // Click event to select an item row
 $("#itemTableBody").on("click", "tr", function() {
-    selectedItemIndex = $(this).index(); // Get the index of the clicked row
+    let selectedItemIndex = $(this).index(); // Get the index of the clicked row
     let item = item_array[selectedItemIndex]; // Get the item data
     // Populate the form with the selected item's data
     $('#itemName').val(item.name);
@@ -227,7 +273,7 @@ $("#item_update_button").on("click", function () {
     } else {
         alert("Please select an item to update.");
     }
-});
+});*/
 //////////////////////////////////////////////////////////////////////////// add order////////////////////////////////////////////////////
 
 /*
@@ -261,7 +307,7 @@ $("#order_add_btn").on("click", function (){
     loadOrderTable();
 
 
-});*/  let CustomerId_array = [];
+});*/ /* let CustomerId_array = [];
    const CustomerSelect = () => {
     CustomerId_array = customer_array;
 
@@ -282,4 +328,4 @@ $("#customer").on("change", function () {
         $("#name1").val(selectedCustomer.first_name + " " + selectedCustomer.last_name);
         $("#address1").val(selectedCustomer.address);
     }
-});
+});*/
