@@ -1,6 +1,7 @@
 import ItemModels from "../models/itemModels.js";
 import {item_array} from "../db/database.js";
 
+
 const clearForm1 = () => {
     $('#itemForm')[0].reset(); // Reset the form fields
     let selectedItemIndex = undefined; // Reset the selected item index
@@ -10,6 +11,7 @@ const loadItemTable = () => {
     $("#itemTableBody").empty();
     item_array.map((item,index) =>{
         console.log(item); let data =`<tr>
+           <td>${item.id}</td>
           <td>${item.name}</td>
              <td>${item.qty}</td>
             <td>${item.description}</td>
@@ -62,7 +64,7 @@ $("#itemTableBody").on("click", "tr", function() {
     $("#itemTableBody tr").removeClass("table-active"); // Remove highlight from all rows
     $(this).addClass("table-active"); // Highlight the selected row
 });
-
+// delete item function
 $("#item_delete_button").on("click", function (selectedItemIndex) {
     if (selectedItemIndex !== undefined) {
         item_array.splice(selectedItemIndex, 1); // Remove the selected item
@@ -72,7 +74,7 @@ $("#item_delete_button").on("click", function (selectedItemIndex) {
         alert("Please select an item to delete.");
     }
 });
-
+// Update item function
 $("#item_update_button").on("click", function () {
     if (selectedItemIndex !== undefined) {
         let name = $('#itemName').val().trim();

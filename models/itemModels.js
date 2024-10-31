@@ -1,5 +1,3 @@
-
-
 export default class ItemModels{
     constructor(id,name,qty,description,price){
         this._id = id;
