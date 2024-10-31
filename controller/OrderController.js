@@ -17,9 +17,9 @@ function populateCustomerDropdown() {
 
 }
 function handleCustomerSelection() {
-    const customerSelect = document.getElementById("customer1");
-    const nameField = document.getElementById("name1");
-    const addressField = document.getElementById("address1");
+    const customerSelect = document.getElementById("customer");
+    const nameField = document.getElementById("name");
+    const addressField = document.getElementById("address");
 
     // Find the selected customer from CustomerDB
     const selectedCustomerId = customerSelect.value;
@@ -84,21 +84,21 @@ function handleItemSelection(){
 $("#item").on("click", function (){
     handleItemSelection();
 });
-/////////////////////////////////////////////////////////////////
+
 /*Genarate Order Id */
-/////////////////////////////////////////////////////////////////
+
 
 function genarateOrderId () {
-    if (order_array.length === 0) return 'O001'
+    if (order_array.length === 0) return '01'
 
     const lastOrderId = order_array[order_array.length - 1].id;
     const lastIdNum = parseInt(lastOrderId.slice(1),10);
     return 'O' + String(lastIdNum + 1).padStart(3, '0');
 }
 
-/////////////////////////////////////////////////////////////////
+
 /*Content Load */
-/////////////////////////////////////////////////////////////////
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const orderIdField = document.getElementById("orderID");
